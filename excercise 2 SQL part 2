@@ -1,0 +1,108 @@
+-- lets ans the question by making a query --
+
+-- 2.1 Select the last name of all employees.
+
+SELECT lastName FROM dbo.Employees
+
+-- 2.2 Select the last name of all employees, without duplicates.
+
+
+SELECT DISTINCT lastname from dbo.Employees
+
+
+-- 2.3 Select all the data of employees whose last name is "Smith".
+
+SELECT * FROM dbo.Employees
+Where lastname  = 'smith'
+
+
+-- 2.4 Select all the data of employees whose last name is "Smith" or "Doe".
+
+
+SELECT * FROM dbo.Employees
+Where lastname  = 'smith' or lastname  =  'Doe';
+
+--2nd way for the same probleam 
+
+
+
+SELECT * FROM dbo.Employees
+Where lastname  in ('smith','Doe');
+
+-- 2.5 Select all the data of employees that work in department 14
+
+
+SELECT * FROM Employees 
+where department  = 14;
+
+-- 2.6 Select all the data of employees that work in department 37 or department 77.
+
+
+SELECT * FROM Employees 
+where department  in (14,77);
+
+-- 2.7 Select all the data of employees whose last name begins with an "S".
+
+SELECT * FROM Employees
+WHERE Lastname like 's%';
+
+-- 2.8 Select the sum of all the departments' budgets.
+
+select sum(budget) as sum_all_departments  from departments 
+
+-- 2.9 Select the number of employees in each department (you only need to show the department code and the number of employees).
+
+SELECT department, count(name) as Number_of_employees from employees 
+group by department 
+
+
+-- 2.10 Select all the data of employees, including each employee's department's data
+
+Select * from employees as e
+inner join departments as d
+on d.code = e.department 
+order by e.Name 
+
+-- 2.11 Select the name and last name of each employee, along with the name and budget of the employee's department.
+
+SELECT e.Name, e.LastName , d.name,d.budget from employees as e
+inner join departments as d
+on e.department  = d.code
+
+-- 2.12 Select the name and last name of employees working for departments with a budget greater than $60,000.
+
+SELECT e.Name, e.LastName ,d.name from employees as e
+inner join departments as d
+on e.department  = d.code 
+where d.budget > 60000;
+
+
+-- 2.13 Select the departments with a budget larger than the average budget of all the departments.
+
+SELECT d.name ,d.budget from departments as d 
+where budget > (select avg(budget) from departments)
+
+-- 2.15 Very Important - Select the name and last name of employees working for departments with second lowest budget.
+
+-- 2.17 Reduce the budget of all departments by 10%.
+
+update departments
+set budget  = 0/9 * budget
+
+-- 2.16  Add a new department called "Quality Assurance", with a budget of $40,000 and departmental code 11. 
+
+INSERT INTO Departments(Name ,code,Budget)
+Values ('Quality Assurance',11,40000)
+
+-- 2.18 Reassign all employees from the Research department (code 77) to the IT department (code 14).
+
+update employees 
+set Department = 14 
+where Department = 77;
+
+-- 2.15 Very Important - Select the name and last name of employees working for departments with second lowest budget.
+
+select e.name, e.lastname, d.budget from employees as e 
+inner join departments as d 
+on e.department  = d.code
+group by d.budget 
