@@ -1,0 +1,50 @@
+-- 5.1 Select the name of all the pieces. 
+ 
+
+ SELECT NAME FROM Pieces
+
+ -- 5.2  Select all the providers' data. 
+
+ SELECT * from providers
+
+ -- 5.3 Obtain the average price of each piece (show only the piece code and the average price).
+
+ select avg(price) as avg_price , Piece from Provides
+ group by piece 
+
+ -- 5.4  Obtain the names of all providers who supply piece 1.
+
+ select Provider  from Provides
+ where piece  = 1;
+
+ -- 5.5 Select the name of pieces provided by provider with code "HAL".
+
+ select Pieces.name from Pieces
+ where code  in (select piece from provider where provider  = 'HAL')
+ 
+
+ -- Anothere methode to solve the same probleam 
+
+ SELECT PIECES.NAME FROM PIECES JOIN PROVIDERS 
+ ON (PIECES.CODE  =  PROVIDERS.PIECES )
+ WHERE Provides.Provider = 'HAL';
+
+-- 5.7 Add an entry to the database to indicate that "Skellington Supplies" (code "TNBC") will provide sprockets (code "1") for 7 cents each.
+
+INSERT INTO Provides(PIECE, PROVIDER, PRICE) VALUES(1, 'TNBC',7)
+
+-- 5.8 Increase all prices by one cent.
+ 
+update provides 
+set price  =  price +  1
+
+-- 5.9 Update the database to reflect that "Susan Calvin Corp." (code "RBT") will not supply bolts (code 4).
+
+DELETE Provides
+WHERE PROVIDER = 'RBT' AND PIECE = 4;
+
+-- 5.10 Update the database to reflect that "Susan Calvin Corp." (code "RBT") will not supply any pieces 
+    -- (the provider should still remain in the database).
+
+delete from provides 
+where provider = 'RBT';
