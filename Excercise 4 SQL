@@ -1,0 +1,76 @@
+-- 4.1 Select the title of all movies.
+
+
+SELECT TITLE FROM MOVIES
+
+-- 4.2 Show all the distinct ratings in the database.
+
+SELECT DISTINCT rating from movies 
+
+-- 4.3  Show all unrated movies.
+
+SELECT * from movies 
+where rating  is NULL;
+
+-- 4.4 Select all movie theaters that are not currently showing a movie.
+
+SELECT * FROM MovieTheaters
+WHERE MOVIE IS NULL
+
+-- 4.5 Select all data from all movie theaters 
+
+SELECT M.Rating , M.TITLE , T.NAME , T.Movie FROM MovieTheaters AS T 
+INNER JOIN MOVIES AS M 
+ON T.MOVIE = M.CODE 
+WHERE T.MOVIE IS NOT NULL
+
+-- 4.6 Select all data from all movies and, if that movie is being shown in a theater, show the data from the theater.
+
+SELECT  T.CODE ,T.NAME , T.Movie FROM MovieTheaters AS T 
+INNER JOIN MOVIES AS M 
+ON T.MOVIE = M.CODE 
+WHERE T.MOVIE IS NOT NULL
+
+
+-- 4.7 Show the titles of movies not currently being shown in any theaters.
+
+SELECT * FROM MOVIES AS M 
+RIGHT JOIN MovieTheaters AS T 
+ON M.CODE  =  T.MOVIE 
+WHERE T.MOVIE IS NULL
+
+
+SELECT *
+   FROM MovieTheaters RIGHT JOIN Movies
+   ON MovieTheaters.Movie = Movies.Code;
+
+
+   -- 4.8 Add the unrated movie "One, Two, Three".
+update Movies
+set rating  =  1
+where title =  'The Quiet Man';
+
+update Movies
+set rating  =  2
+where title =  'North by Northwest';
+
+update Movies
+set rating  =  3
+where title =  'A Night at the Opera';
+
+-- for directly adding values in the queries -- 
+
+
+INSERT INTO Movies(Title,Rating) VALUES('One, Two, Three',NULL);
+
+
+-- 4.9 Set the rating of all unrated movies to "G".
+
+update movies 
+set rating  =  'g'
+where rating is null;
+
+-- 4.10 Remove movie theaters projecting movies rated "NC-17".
+
+delete movies 
+where title  = 'NC-17'
