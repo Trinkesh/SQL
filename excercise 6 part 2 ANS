@@ -1,0 +1,27 @@
+-- 6.1 List all the scientists' names, their projects' names, 
+ 
+
+ SELECT Projects.name as ProjectName ,Scientists.name as Scientist_Name, Projects.Hours from Scientists
+ inner join AssignedTo
+ on Scientists.SSN  =  AssignedTo.Scientist
+ inner join Projects 
+ on AssignedTo.Project = Projects.code 
+
+order by Projects.name ASC
+
+
+-- 6.2 Select the project names which are not assigned yet
+
+SELECT Projects.NAME, Projects.Code FROM Projects
+inner join AssignedTo
+on Projects.Code  = AssignedTo.Project
+
+where Projects.NAME not in AssignedTo.Project
+
+-- failed creating above query 
+
+-- new -- 
+
+SELECT NAME FROM Projects
+WHERE CODE NOT IN ( SELECT PROJECT FROM AssignedTo) 
+
