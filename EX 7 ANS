@@ -1,0 +1,17 @@
+ --  7.1 Who receieved a 1.5kg package?
+    -- The result is "Al Gore's Head".
+
+--	weight  = 1.5 
+
+SELECT Client.NAME FROM Client
+INNER JOIN Package
+ON Client.AccountNumber =  Package.Recipient
+
+where Package.Weight =  1.5
+
+-- 7.2 What is the total weight of all the packages that he sent?
+
+SELECT  sum(Package.Weight) as Total_weight_of_ALL_Packages FROM Client
+INNER JOIN Package
+ON Client.AccountNumber =  Package.Recipient
+
